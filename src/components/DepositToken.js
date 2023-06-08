@@ -1,4 +1,3 @@
-import {useState} from 'react';
 //Example to get function as argument
 //the {} is needed in the argument
 export default function DepositToken({_sendTokenToAizuMujin, toggle})

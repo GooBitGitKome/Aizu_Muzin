@@ -28,8 +28,8 @@ let provider = null; //Like Metamask.
 let signer = null;  //the signature from currentAccount, used to interact with Blockchain.
 let balance = 0; //temp variables to get blance of Token from address.
 export default function Dapp() {
-    const [toggle,setToggle] = useState(false);
-
+    const [toggle,setToggle] = useState(false);//for send button 
+    const [toggle2,setToggle2] = useState(false);//for All Token send button 
     return (
         <>
         <h1>会津無尽</h1>
@@ -44,7 +44,7 @@ export default function Dapp() {
 
         <BalanceOf />
 
-        <FoundToken _transferAllToken={_transferAllToken}/>
+        <FoundToken _transferAllToken={()=>{_transferAllToken(setToggle2)}} toggle2={toggle2} />
         <br />
         <div>
         <br />
@@ -66,14 +66,18 @@ export default function Dapp() {
 
     async function _connectionProcedure()
     {
-        await _connectWallet();
-        deactivateFunctions();//deactivate the connection button
-        await _makeSigner();//current account signature
-        await _getAccount();//current account address
-        await _makeContract(TAddress,TokenABI.abi,tokenContract);// Token Contract Instance
-        await _makeContract(AMujinAddress,AMujinABI.abi,aizuMujinContract);// AizuMujin Contract Instance
-        await _getBalanceOf(currentAccount,"myTotalToken"); //get balance from MY wallet
-        await _getBalanceOf(AMujinAddress,"AizuMujinTotalToken");// get balance from AIZUMUJIN contract
+        try{
+            await _connectWallet();
+            activateFunc(false);//Connecting button disabled
+            await _makeSigner();//current account signature
+            await _getAccount();//current account address
+            await _makeContract(TAddress,TokenABI.abi,tokenContract);// Token Contract Instance
+            await _makeContract(AMujinAddress,AMujinABI.abi,aizuMujinContract);// AizuMujin Contract Instance
+            await _getBalanceOf(currentAccount,"myTotalToken"); //get balance from MY wallet
+            await _getBalanceOf(AMujinAddress,"AizuMujinTotalToken");// get balance from AIZUMUJIN contract
+        }catch(error){
+            //activateFunc(true);//Connecting button disabled
+        }
     }
 
     async function _connectWallet()
@@ -85,7 +89,11 @@ export default function Dapp() {
             console.log("OK: Metamask exists.");
             // get Metamask Provider
             provider = new ethers.providers.Web3Provider(window.ethereum);
-            await provider.send("eth_requestAccounts", []);
+            try{
+                await provider.send("eth_requestAccounts", []);
+            }catch(error){
+                alert("Connecting canceled or Error occured")
+            }
             console.log(provider);
         }
     }
@@ -121,17 +129,12 @@ export default function Dapp() {
         if(!isNaN(amount)){
             try{
                 let transaction = await tokenContract.contract.connect(signer).transfer(AMujinAddress,Number(amount));
-
-                activateSendTokenFunctions(false);
-                setToggle(true);
+                setToggle(true);//send button disabled
                 await transaction.wait();
-                setToggle(false);
-
+                setToggle(false);// send button disabled
                 //activateSendTokenFunctions(true);
                 await _getBalanceOf(currentAccount,"myTotalToken"); //get balance from MY wallet
                 await _getBalanceOf(AMujinAddress,"AizuMujinTotalToken");// get balance from AIZUMUJIN contract
-
-
             }catch(error){
                 alert("ERROR: Canceled or Failed");
             }
@@ -157,32 +160,21 @@ export default function Dapp() {
     }
 
     //After the connection to this page, connectBtn must be inactivated.
-    function deactivateFunctions()
+    function activateFunc(_activate)
     {
-        if(provider != null)
+        if(provider != null && _activate===false)
         {
             document.getElementById('connectBtn').innerHTML ="ウォレット接続済み";
             document.getElementById('connectBtn').setAttribute("disabled", true);
-        }
-    }
-
-    //After the connection to this page, connectBtn must be inactivated.
-    function activateSendTokenFunctions(action)
-    {
-        if(action==false)
-        {
-            document.getElementById('transactionBtn').innerHTML ="Waiting";
-            document.getElementById('transactionBtn').setAttribute("disabled", true);
-        }else{
-            document.getElementById('transactionBtn').innerHTML ="Send";
-            document.getElementById('transactionBtn').setAttribute("disabled", false);
-            document.getElementById('transactionBtn').setAttribute("enabled", true);
+        }else if(_activate===true){
+            document.getElementById('connectBtn').innerHTML ="ウォレットに接続する";
+            document.getElementById('connectBtn').setAttribute("disabled", false);
         }
     }
 
     //Aizumujin Contract function
     //send all token into the person of the address in input box
-    async function _transferAllToken()
+    async function _transferAllToken(setToggle2)
     {
         //get Address from html form
         const _toAddress = document.getElementById("aizuMujinInpt").value;
@@ -190,7 +182,10 @@ export default function Dapp() {
         if(!isNaN(_toAddress)){
             //when the inputbox has a value to get
             try{
-                await aizuMujinContract.contract.connect(signer).sendAllTokens(_toAddress);
+                let transaction = await aizuMujinContract.contract.connect(signer).sendAllTokens(_toAddress);
+                setToggle2(true);
+                await transaction.wait();
+                setToggle2(false);
             }catch(error){
                 alert("ERROR: Canceled or Failed");
             }

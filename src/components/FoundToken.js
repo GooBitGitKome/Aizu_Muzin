@@ -1,6 +1,6 @@
 //Example to get function as argument
 //the {} is needed in the argument
-export default function FoundToken({_transferAllToken})
+export default function FoundToken({_transferAllToken, toggle2})
 {
     return (<>
         <form>
@@ -9,7 +9,7 @@ export default function FoundToken({_transferAllToken})
             <br/>
             <input type="text" id="aizuMujinInpt" required="required" />
             <br/><br/>
-            <input type="button" id="aizuMujinBtn" onClick={()=>{_transferAllToken()}} value="会津無人" />
+            <input type="button" id="aizuMujinBtn" onClick={()=>{_transferAllToken()}} value="会津無尽" disabled={toggle2}/>
             <br /><br />
         </form>
     </>);
