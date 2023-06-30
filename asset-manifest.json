@@ -1,13 +1,16 @@
 {
   "files": {
-    "main.css": "/GooBitGitKome/Aizu_Muzin/static/css/main.c42470c4.css",
-    "main.js": "/GooBitGitKome/Aizu_Muzin/static/js/main.c2f934c1.js",
-    "index.html": "/GooBitGitKome/Aizu_Muzin/index.html",
-    "main.c42470c4.css.map": "/GooBitGitKome/Aizu_Muzin/static/css/main.c42470c4.css.map",
-    "main.c2f934c1.js.map": "/GooBitGitKome/Aizu_Muzin/static/js/main.c2f934c1.js.map"
+    "main.css": "/Aizu_Muzin/static/css/main.073c9b0a.css",
+    "main.js": "/Aizu_Muzin/static/js/main.89e2a2ef.js",
+    "static/js/787.22edae46.chunk.js": "/Aizu_Muzin/static/js/787.22edae46.chunk.js",
+    "static/media/logo.svg": "/Aizu_Muzin/static/media/logo.6ce24c58023cc2f8fd88fe9d219db6c6.svg",
+    "index.html": "/Aizu_Muzin/index.html",
+    "main.073c9b0a.css.map": "/Aizu_Muzin/static/css/main.073c9b0a.css.map",
+    "main.89e2a2ef.js.map": "/Aizu_Muzin/static/js/main.89e2a2ef.js.map",
+    "787.22edae46.chunk.js.map": "/Aizu_Muzin/static/js/787.22edae46.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.c42470c4.css",
-    "static/js/main.c2f934c1.js"
+    "static/css/main.073c9b0a.css",
+    "static/js/main.89e2a2ef.js"
   ]
 }
