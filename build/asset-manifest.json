@@ -1,0 +1,13 @@
+{
+  "files": {
+    "main.css": "/GooBitGitKome/Aizu_Muzin/static/css/main.c42470c4.css",
+    "main.js": "/GooBitGitKome/Aizu_Muzin/static/js/main.c2f934c1.js",
+    "index.html": "/GooBitGitKome/Aizu_Muzin/index.html",
+    "main.c42470c4.css.map": "/GooBitGitKome/Aizu_Muzin/static/css/main.c42470c4.css.map",
+    "main.c2f934c1.js.map": "/GooBitGitKome/Aizu_Muzin/static/js/main.c2f934c1.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.c42470c4.css",
+    "static/js/main.c2f934c1.js"
+  ]
+}
